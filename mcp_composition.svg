@@ -1,0 +1,76 @@
+<svg width="680" height="600" viewBox="0 0 680 600" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="mcptitle mcpdesc">
+<title id="mcptitle">Bidirectional MCP composition</title>
+<desc id="mcpdesc">VerifyAI MCP server simultaneously exposes 8 tools to Claude Desktop and acts as an MCP client to Splunk MCP Gateway. Same process, both directions.</desc>
+<defs>
+  <marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="#5F5E5A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+    .t-title { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 500; }
+    .t-sub { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 400; }
+    .t-mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 11px; font-weight: 400; }
+    .t-label { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 500; fill: #444441; }
+    .t-note { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 400; fill: #5F5E5A; font-style: italic; }
+  </style>
+</defs>
+
+<!-- Claude Desktop at top -->
+<rect x="220" y="20" width="240" height="56" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+<text class="t-title" x="340" y="42" text-anchor="middle" dominant-baseline="central" fill="#26215C">Consumer</text>
+<text class="t-sub" x="340" y="62" text-anchor="middle" dominant-baseline="central" fill="#3C3489">Claude Desktop or MCP Inspector</text>
+
+<!-- Arrow down, with label -->
+<line x1="340" y1="80" x2="340" y2="118" stroke="#5F5E5A" stroke-width="1.5" marker-end="url(#arr2)"/>
+<text class="t-label" x="350" y="100" dominant-baseline="central">MCP stdio, calls 8 tools</text>
+
+<!-- VerifyAI MCP server outer container -->
+<rect x="40" y="120" width="600" height="320" rx="14" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<text class="t-title" x="340" y="146" text-anchor="middle" dominant-baseline="central" fill="#04342C">VerifyAI MCP server</text>
+<text class="t-sub" x="340" y="164" text-anchor="middle" dominant-baseline="central" fill="#0F6E56">single process, two roles</text>
+
+<!-- Top compartment: MCP SERVER side (exposes tools to Claude) -->
+<rect x="60" y="180" width="560" height="110" rx="8" fill="#9FE1CB" stroke="#0F6E56" stroke-width="0.5"/>
+<text class="t-label" x="80" y="200" dominant-baseline="central" fill="#04342C">role A, MCP server interface (exposes 8 tools)</text>
+
+<text class="t-mono" x="80" y="222" fill="#085041">verifyai_list_workflows</text>
+<text class="t-mono" x="240" y="222" fill="#085041">verifyai_get_posture</text>
+<text class="t-mono" x="400" y="222" fill="#085041">verifyai_get_drift</text>
+<text class="t-mono" x="540" y="222" fill="#085041">verifyai_run_sweep</text>
+
+<text class="t-mono" x="80" y="246" fill="#085041">verifyai_get_certificate</text>
+<text class="t-mono" x="240" y="246" fill="#085041">verifyai_splunk_list_tools</text>
+<text class="t-mono" x="400" y="246" fill="#085041">verifyai_splunk_describe_tool</text>
+
+<text class="t-mono" x="80" y="270" fill="#085041">verifyai_run_adversarial_sweep</text>
+
+<!-- Divider line -->
+<line x1="80" y1="305" x2="600" y2="305" stroke="#0F6E56" stroke-width="0.3" stroke-dasharray="3 3"/>
+<text class="t-note" x="340" y="305" text-anchor="middle" dominant-baseline="central">same process, three of the server tools delegate to the client below</text>
+
+<!-- Bottom compartment: MCP CLIENT side (calls Splunk) -->
+<rect x="60" y="320" width="560" height="110" rx="8" fill="#9FE1CB" stroke="#0F6E56" stroke-width="0.5"/>
+<text class="t-label" x="80" y="340" dominant-baseline="central" fill="#04342C">role B, MCP client of Splunk MCP Gateway</text>
+
+<text class="t-mono" x="80" y="362" fill="#085041">streamablehttp_client → mcp.ClientSession</text>
+
+<text class="t-sub" x="80" y="386" fill="#085041">backs verifyai_get_drift via:</text>
+<text class="t-mono" x="80" y="404" fill="#085041">o11y_execute_signalflow_program</text>
+
+<text class="t-sub" x="320" y="386" fill="#085041">backs verifyai_splunk_*_tool via:</text>
+<text class="t-mono" x="320" y="404" fill="#085041">session.list_tools()</text>
+
+<!-- Arrow down to Splunk MCP Gateway -->
+<line x1="340" y1="440" x2="340" y2="478" stroke="#5F5E5A" stroke-width="1.5" marker-end="url(#arr2)"/>
+<text class="t-label" x="350" y="460" dominant-baseline="central">MCP streamable HTTP, calls subset of 12 tools</text>
+
+<!-- Splunk MCP Gateway at bottom -->
+<rect x="40" y="480" width="600" height="100" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text class="t-title" x="340" y="502" text-anchor="middle" dominant-baseline="central" fill="#042C53">Splunk MCP Gateway</text>
+<text class="t-sub" x="340" y="520" text-anchor="middle" dominant-baseline="central" fill="#0C447C">12 o11y tools available, region-pdx10.api.scs.splunk.com</text>
+
+<text class="t-mono" x="60" y="544" fill="#0C447C">o11y_execute_signalflow_program</text>
+<text class="t-mono" x="340" y="544" fill="#0C447C">o11y_search_alerts_or_incidents</text>
+
+<text class="t-mono" x="60" y="562" fill="#0C447C">o11y_get_metric_metadata</text>
+<text class="t-mono" x="340" y="562" fill="#0C447C">plus 9 more discoverable via list_tools</text>
+</svg>

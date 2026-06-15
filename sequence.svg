@@ -1,0 +1,98 @@
+<svg width="680" height="660" viewBox="0 0 680 660" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="seqtitle seqdesc">
+<title id="seqtitle">Adversarial sweep lifecycle</title>
+<desc id="seqdesc">Temporal sequence of a single adversarial sweep, from analyst trigger through DeepTeam probes, OpenTelemetry push to Splunk, and the read-back via Splunk MCP Gateway. Shows the loop closing.</desc>
+<defs>
+  <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="#5F5E5A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <marker id="arrDashed" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M2 1L8 5L2 9" fill="none" stroke="#888780" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </marker>
+  <style>
+    .t-title { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 500; }
+    .t-msg { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 400; fill: #444441; }
+    .t-note { font-family: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif; font-size: 12px; font-weight: 400; fill: #5F5E5A; font-style: italic; }
+    .lifeline { stroke: #B4B2A9; stroke-width: 0.5; stroke-dasharray: 4 4; }
+    .msg { stroke: #5F5E5A; stroke-width: 1.5; fill: none; }
+    .msg-return { stroke: #888780; stroke-width: 1; stroke-dasharray: 5 3; fill: none; }
+  </style>
+</defs>
+
+<!-- Participant boxes -->
+<rect x="20" y="20" width="120" height="44" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+<text class="t-title" x="80" y="42" text-anchor="middle" dominant-baseline="central" fill="#26215C">Analyst</text>
+<text class="t-msg" x="80" y="58" text-anchor="middle" dominant-baseline="central" fill="#3C3489">Claude Desktop</text>
+
+<rect x="180" y="20" width="140" height="44" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<text class="t-title" x="250" y="42" text-anchor="middle" dominant-baseline="central" fill="#04342C">VerifyAI MCP</text>
+<text class="t-msg" x="250" y="58" text-anchor="middle" dominant-baseline="central" fill="#0F6E56">stdio server</text>
+
+<rect x="360" y="20" width="160" height="44" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<text class="t-title" x="440" y="42" text-anchor="middle" dominant-baseline="central" fill="#04342C">Modal backend</text>
+<text class="t-msg" x="440" y="58" text-anchor="middle" dominant-baseline="central" fill="#0F6E56">FastAPI + DeepTeam</text>
+
+<rect x="560" y="20" width="100" height="44" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+<text class="t-title" x="610" y="42" text-anchor="middle" dominant-baseline="central" fill="#042C53">Splunk</text>
+<text class="t-msg" x="610" y="58" text-anchor="middle" dominant-baseline="central" fill="#0C447C">o11y cloud</text>
+
+<!-- Lifelines -->
+<line x1="80" y1="64" x2="80" y2="640" class="lifeline"/>
+<line x1="250" y1="64" x2="250" y2="640" class="lifeline"/>
+<line x1="440" y1="64" x2="440" y2="640" class="lifeline"/>
+<line x1="610" y1="64" x2="610" y2="640" class="lifeline"/>
+
+<!-- Step 1: analyst calls verifyai_run_adversarial_sweep -->
+<text class="t-msg" x="165" y="92" text-anchor="middle">1. verifyai_run_adversarial_sweep(account, workflow)</text>
+<line x1="80" y1="100" x2="250" y2="100" class="msg" marker-end="url(#arr)"/>
+
+<!-- Step 2: MCP server forwards to Modal -->
+<text class="t-msg" x="345" y="132" text-anchor="middle">2. POST /run_deepteam {spec}</text>
+<line x1="250" y1="140" x2="440" y2="140" class="msg" marker-end="url(#arr)"/>
+
+<!-- Step 3: Modal self-loop for DeepTeam -->
+<path d="M 440 170 L 520 170 L 520 220 L 440 220" class="msg" marker-end="url(#arr)"/>
+<text class="t-msg" x="528" y="184" text-anchor="start">3. DeepTeam generates 8 probes,</text>
+<text class="t-msg" x="528" y="200" text-anchor="start">   calls target via OpenRouter,</text>
+<text class="t-msg" x="528" y="216" text-anchor="start">   scores each, maps to GLBA controls</text>
+
+<!-- Step 4: Modal pushes metrics to Splunk -->
+<text class="t-msg" x="525" y="252" text-anchor="middle">4. POST /v2/datapoint verifyai.adversarial.*</text>
+<line x1="440" y1="260" x2="610" y2="260" class="msg" marker-end="url(#arr)"/>
+
+<!-- Step 5: Splunk 200 OK -->
+<text class="t-msg" x="525" y="288" text-anchor="middle">5. 200 OK</text>
+<line x1="610" y1="296" x2="440" y2="296" class="msg-return" marker-end="url(#arrDashed)"/>
+
+<!-- Step 6: Modal returns SSE done to MCP -->
+<text class="t-msg" x="345" y="324" text-anchor="middle">6. SSE done {pass_rate, findings, controls_tested}</text>
+<line x1="440" y1="332" x2="250" y2="332" class="msg-return" marker-end="url(#arrDashed)"/>
+
+<!-- Step 7: MCP returns formatted result to analyst -->
+<text class="t-msg" x="165" y="360" text-anchor="middle">7. formatted result with ASCII bars</text>
+<line x1="250" y1="368" x2="80" y2="368" class="msg-return" marker-end="url(#arrDashed)"/>
+
+<!-- Separator -->
+<line x1="20" y1="400" x2="660" y2="400" stroke="#D3D1C7" stroke-width="0.5" stroke-dasharray="2 4"/>
+<text class="t-note" x="340" y="394" text-anchor="middle">later, same Splunk instance, read back through MCP composition</text>
+
+<!-- Step 8: analyst asks for drift -->
+<text class="t-msg" x="165" y="432" text-anchor="middle">8. verifyai_get_drift(workflow)</text>
+<line x1="80" y1="440" x2="250" y2="440" class="msg" marker-end="url(#arr)"/>
+
+<!-- Step 9: MCP server calls Splunk MCP Gateway directly -->
+<text class="t-msg" x="430" y="472" text-anchor="middle">9. MCP: o11y_execute_signalflow_program</text>
+<line x1="250" y1="480" x2="610" y2="480" class="msg" marker-end="url(#arr)"/>
+
+<!-- Step 10: Splunk returns time-series JSON -->
+<text class="t-msg" x="430" y="508" text-anchor="middle">10. time-series JSON {metadata, timeseries}</text>
+<line x1="610" y1="516" x2="250" y2="516" class="msg-return" marker-end="url(#arrDashed)"/>
+
+<!-- Step 11: MCP returns formatted ASCII bars -->
+<text class="t-msg" x="165" y="544" text-anchor="middle">11. ASCII bars with dimensions</text>
+<line x1="250" y1="552" x2="80" y2="552" class="msg-return" marker-end="url(#arrDashed)"/>
+
+<!-- Outcome note -->
+<rect x="120" y="582" width="440" height="58" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+<text class="t-title" x="340" y="606" text-anchor="middle" dominant-baseline="central" fill="#04342C">Loop closes</text>
+<text class="t-msg" x="340" y="624" text-anchor="middle" dominant-baseline="central" fill="#0F6E56">Same Splunk instance receives telemetry on the write path and serves it on the read path</text>
+</svg>
