@@ -140,6 +140,18 @@ The 8 VerifyAI MCP tools:
 
 ---
 
+## Devpost submission readiness
+
+| Check | Status | Notes |
+|---|---|---|
+| Splunk AI capabilities used at runtime | ✅  | Splunk MCP Server is called live in `verifyai_get_drift`. We connect to `mcp-gateway/v1`, execute SignalFlow, parse the response. Real code path, not mock. |
+| Architecture diagram in repo root | ✅  | `architecture.svg` in root. Four supporting SVGs alongside it: `sequence.svg`, `mcp_composition.svg`, `metric_schema.svg`, `compliance_mapping.svg`. |
+| Project new or substantially updated (after May 18, 2026) | ✅ | VerifyAI started on 5/17. The Splunk integration (OTel exporter, MCP server, Splunk MCP Gateway client, adversarial telemetry push, dashboard auto-deploy, replay pipeline) shipped during the hackathon period. Commit history backs this up. See Background section. |
+| OSI license detectable | ✅  | `LICENSE` file with MIT text at repo root. GitHub About section auto-detects. |
+| Repo publicly accessible | ✅  | Confirmed by opening `https://github.com/vje013/verifyai-splunk` in private browsing. |
+
+---
+
 ## Technological implementation
 
 **OpenTelemetry as the evidence pipeline.** Direct REST to `ingest.us1.signalfx.com/v2/datapoint` with X-SF-TOKEN auth. Two helper functions (`_push_splunk_metrics`, `_push_splunk_adversarial_metrics`) wired into the determinism and adversarial sweep endpoints. Silent skip if token is absent. Never raises. Failure to push does not break the sweep return path.
