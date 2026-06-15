@@ -291,14 +291,22 @@ Opens at `http://localhost:6274`. All 8 tools selectable from the dropdown.
 
 ```
 .
-├── modal_app.py                  Modal backend, 8 endpoints
-├── verifyai_mcp_server.py        MCP server, 8 tools, composes Splunk MCP Gateway
-├── replay_to_splunk.py           Ships seeded ledger data into Splunk
-├── deploy_dashboard.py           Creates "Agent Determinism Posture" dashboard
-├── claude_desktop_config.json    MCP wiring for Claude Desktop
-├── architecture.svg              Architecture diagram
-├── README.md                     This file
-└── LICENSE                       MIT
+├── modal_app.py                          Modal backend, 8 endpoints
+├── verifyai_mcp_server.py                MCP server, 8 tools, composes Splunk MCP Gateway
+├── replay_to_splunk.py                   Ships seeded ledger data into Splunk
+├── deploy_dashboard.py                   Creates "Agent Determinism Posture" dashboard
+├── claude_desktop_config.json            MCP wiring for Claude Desktop
+├── architecture.svg                      System architecture diagram
+├── sequence.svg                          Sweep lifecycle, temporal view
+├── mcp_composition.svg                   VerifyAI MCP server as server and client in one process
+├── screenshots/
+│   ├── splunk_dashboard.png              Five-panel determinism posture dashboard
+│   ├── splunk_workflow_spread.png        Multi-tenant view of all workflows in one pane
+│   ├── mcp_inspector_tools.png           All 8 MCP tools surfaced through MCP Inspector
+│   ├── mcp_inspector_adversarial_result.png   Live adversarial sweep result, 8 of 8 blocked
+│   └── darwin_certificate_aesthetic.png  Darwin family design language reference
+├── README.md                             This file
+└── LICENSE                               MIT
 ```
 
 ---
