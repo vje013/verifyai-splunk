@@ -297,9 +297,9 @@ Items below are designed-for but not built in this submission. Listed for comple
 
 | Track / Bonus | Claim |
 |---|---|
-| Observability ($3K) | Determinism and adversarial telemetry as first-class SLIs in Splunk Observability Cloud |
-| Splunk MCP Server bonus ($1K) | Bidirectional MCP composition. VerifyAI MCP server is also a Splunk MCP Gateway client. |
-| Grand Prize ($7K) | The SOC for AI agent determinism is a new category in Splunk's portfolio |
+| Observability | Determinism and adversarial telemetry as first-class SLIs in Splunk Observability Cloud |
+| Splunk MCP Server bonus | Bidirectional MCP composition. VerifyAI MCP server is also a Splunk MCP Gateway client. |
+| Grand Prize | The SOC for AI agent determinism is a new category in Splunk's portfolio |
 
 ---
 
