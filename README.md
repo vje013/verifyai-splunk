@@ -341,7 +341,6 @@ Items below are designed-for but not built in this submission. Listed for comple
 
 MIT. See `LICENSE`.
 
---
 
 ## Background
 
