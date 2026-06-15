@@ -167,13 +167,27 @@ The 8 VerifyAI MCP tools:
 **Seeded data is real, not synthetic.** Four customer fixtures, 29 historical sweeps already in the Modal volume ledger. `replay_to_splunk.py` ships them into Splunk over a configurable time window so the dashboard has shape from minute one.
 
 ---
-
 ## Design
 
-VerifyAI's compliance certificate aesthetic (engraved gold serif type on a green field, evoking diploma and bond paper) ports directly into a Splunk app face. Public certificate URLs (`verifyai-fin.vercel.app/posture/{account}`) already render this way and embed via iframe.
+We render compliance attestations as engraved certificates: amber serif type on a dark green field, evoking diploma and bond paper. SECURITAS · STABILITAS · SIGNUM. See `screenshots/darwin_certificate_aesthetic.png` for an example.
 
-The Splunk dashboard panel set follows the same posture-grade visual logic: one number front and center, drilldown by dimension, trend below. Built to be read in five seconds during a standup.
+![Darwin certificate aesthetic](screenshots/darwin_certificate_aesthetic.png)
 
+VerifyAI inherits that language. The visual logic ports directly into a Splunk app face.
+
+The Splunk dashboard panel set follows the same posture-grade discipline. One number front and center. Drilldown by dimension. Trend below. Built to be read in five seconds during a standup.
+
+The MCP server output applies the same principle inside the analyst loop. SignalFlow time-series responses render as ASCII bars with timestamps and dimensions, not raw JSON. Adversarial sweep results show pass rate per vulnerability class with proportional bars and the exact compliance controls touched. The format is the message.
+
+Three surfaces, one aesthetic:
+
+| Surface | Visual logic |
+|---|---|
+| Darwin certificates (DAC) | Engraved serif, dark green, signature line |
+| Splunk dashboard  | Posture-grade panel set, one-glance reads |
+| MCP tool output | Minimal density, ASCII bars, dimension labels |
+
+Design is consistency, not decoration.
 ---
 
 ## Demo
