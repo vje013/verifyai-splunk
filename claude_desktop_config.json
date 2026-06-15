@@ -1,0 +1,43 @@
+// Claude Desktop config — VerifyAI + Splunk MCP composition
+//
+// Location on macOS: ~/Library/Application Support/Claude/claude_desktop_config.json
+// Quit and reopen Claude Desktop after saving.
+//
+// "verifyai" is our own MCP server (this repo)
+// "splunk" is Splunk's official MCP server (optional, runs in Docker)
+//
+// When both are configured, Claude can compose tools across them:
+//   - verifyai_get_drift uses the Splunk Observability metric API directly
+//   - splunk_* tools query the broader Splunk Cloud Platform if connected
+//   - Claude orchestrates between them in a single turn
+{
+  "mcpServers": {
+    "verifyai": {
+      "command": "/usr/bin/python3",
+      "args": [
+        "/Users/MacBook/verifyai/backend/verifyai_mcp_server.py"
+      ],
+      "env": {
+        "SPLUNK_ACCESS_TOKEN": "dMbrNREKdncgJ7vWBNqbmg",
+        "SPLUNK_REALM": "us1",
+        "VERIFYAI_ACCOUNTS": "echelor,nce,fifththird,splunk-smoke-test"
+      }
+    },
+
+    // OPTIONAL — Splunk's official MCP server (requires Splunk Cloud Platform
+    // or a paid Splunk Enterprise instance; may not be available on the
+    // Observability Cloud Free Edition).
+    //
+    // Uncomment when you have a Splunk Cloud Platform instance to point at.
+    //
+    // "splunk": {
+    //   "command": "docker",
+    //   "args": [
+    //     "run", "--rm", "-i",
+    //     "-e", "SPLUNK_HOST=https://your-splunk-host.splunkcloud.com",
+    //     "-e", "SPLUNK_TOKEN=your-splunk-platform-token",
+    //     "ghcr.io/splunk/mcp-server-splunk:latest"
+    //   ]
+    // }
+  }
+}
