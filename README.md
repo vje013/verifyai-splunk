@@ -87,7 +87,7 @@ The composition matters. VerifyAI writes telemetry into Splunk on one side and r
                   +-------------------------------------------+
 ```
 
-Full SVG: `architecture.svg` in repo root.
+Full SVG: `architecture_diagram.png` in repo root.
 
 ---
 
