@@ -311,6 +311,8 @@ MIT. See `LICENSE`.
 
 ## Built by
 
-Darwin Adaptive Systems LLC. CAGE 1ABV3. UEI T26UUF673MZ8.
+Darwin Adaptive Systems LLC. 
 
-Vladimir Edouard, CEO.
+"SECURITAS. STABILITAS. SIGNUM."
+
+Vladimir Edouard, CEO. Brandon Chen, COO.
