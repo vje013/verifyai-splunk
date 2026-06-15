@@ -1,6 +1,6 @@
 # VerifyAI for Splunk Agentic Ops
 
-**The SOC for AI agent determinism.** Built for the Splunk Agentic Ops Hackathon, June 2026.
+**The Security Operations Command Center for AI agent determinism.** Built for the Splunk Agentic Ops Hackathon, June 2026.
 
 VerifyAI emits agent determinism and adversarial telemetry through OpenTelemetry into Splunk Observability Cloud. Splunk becomes the operational pane where engineering, ITOps, and compliance teams watch AI agent behavior the same way they watch infrastructure.
 
