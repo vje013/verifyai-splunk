@@ -307,6 +307,10 @@ Items below are designed-for but not built in this submission. Listed for comple
 
 MIT. See `LICENSE`.
 
+--
+
+Built during the Splunk Agentic Ops Hackathon (May 18 - June 15, 2026). VerifyAI's determinism scoring backend pre-existed. The Splunk integration shipped during the hackathon period: OpenTelemetry exporter, dashboard auto-deployment, the MCP server, the Splunk MCP Gateway client composition, the adversarial sweep telemetry push, and the replay pipeline. The commit history reflects this.
+
 ---
 
 ## Built by
